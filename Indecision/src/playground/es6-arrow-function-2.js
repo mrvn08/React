@@ -1,37 +1,36 @@
-"use strict";
-
 //=====================================
 //Arguments Object - no longer bound with arrow functions
 //=====================================
 
-var add = function add(a, b) {
-    console.log(arguments); //Javascript function - arguments are still accessible
-    return a + b;
+const add = function (a, b){
+    console.log(arguments);//Javascript function - arguments are still accessible
+    return a+b;
 };
-console.log(add(55, 1));
+console.log(add(55,1));
 
-var add2 = function add2(a, b) {
+const add2 = (a, b) => {
     //console.log(arguments); //arguments will be undefined. They are no longer accesible in arrow functions
-    return a + b;
+    return a+b;
 };
-console.log(add2(55, 1));
+console.log(add2(55,1));
+
 
 //=====================================
 //'this' keyword - no longer bound with arrow functions
 //=====================================
 
-var user = {
+const user = {
     name: "Marvin Limson",
     cities: ["Barnet", "Manila", "Xiamen"],
-    printPlacesLived: function printPlacesLived() {
-        var that = this;
+    printPlacesLived: function(){
+        const that = this;
         //3. This const 'that' is a possible workaround to this problem
         console.log(this.name);
         console.log(this.cities);
         //1. arguments are accesible here through the 'this' keyword 
         //which is local to this object
-        this.cities.forEach(function (city) {
-            console.log(that.name + " has lived in " + city);
+        this.cities.forEach(function(city){
+            console.log(that.name + " has lived in " +city);
             //2. but over here the 'this' keyword is not accesible by this
             //anonymous function
             //4. Note that I replaced 'this' with 'that'
@@ -41,26 +40,24 @@ var user = {
 
 user.printPlacesLived();
 
-var user2 = {
+const user2 = {
     name: "Marvin Limson",
     cities: ["Chuan Zhou", "Binondo", "Edgware"],
-    printPlacesLived: function printPlacesLived() {
-        var _this = this;
-
+    printPlacesLived: function(){
         //5. When switched to an arrow function using the work around above is no
         //longer required as functions in ES6 no longer bind their own 'this' keyword
         //but use the 'this' in the context they were created in.
-        this.cities.forEach(function (city) {
-            console.log(_this.name + " has lived in " + city);
+        this.cities.forEach((city)=>{
+            console.log(this.name + " has lived in " +city);
         });
     }
 };
 
 user2.printPlacesLived();
 
-var user3 = {
+const user3 = {
     name: "Michelle Gan",
-    cities: ["Tokyo", "Kyoto", "Manila"]
+    cities: ["Tokyo", "Kyoto", "Manila"],
     // 6. However there are instances where you don't want to use arrow function
     // for that same reason. For instance, this method below will cause an error.
     // The method below is not bound to the 'user3' object but one step higher,
@@ -78,25 +75,23 @@ var user3 = {
 // Method Definition Syntax in ES6
 //=====================================
 
-var user4 = {
+const user4 = {
     name: "Michelle Gan",
     cities: ["Tokyo", "Kyoto", "Manila"],
-    printPlacesLived: function printPlacesLived() {
-        var _this2 = this;
-
-        var cityMessages = this.cities.map(function (city) {
+    printPlacesLived(){
+        const cityMessages = this.cities.map((city)=>{
             //return city + "!";
             //this will return the same array but with an "!" at the end of each city
 
-            return _this2.name + ' has lived in ' + city;
+            return this.name + ' has lived in ' + city;
             //takes in the name, concatenates it with ' has lived in ' and ends it with
             //a city 
         });
         // .map allows you to get each item in the array and transform it entirely
         // and get a new array.
 
-        this.cities.forEach(function (city) {
-            console.log(_this2.name + " has lived in " + city);
+        this.cities.forEach((city)=>{
+            console.log(this.name + " has lived in " +city);
         });
         //.forEach allows you to use each item in the array and simply 
         // do something with it
@@ -108,14 +103,12 @@ var user4 = {
 console.log(user4.printPlacesLived());
 
 //One way of simplifying it
-var user5 = {
+const user5 = {
     name: "Michelle Gan",
     cities: ["Tokyo", "Kyoto", "Manila"],
-    printPlacesLived: function printPlacesLived() {
-        var _this3 = this;
-
-        return this.cities.map(function (city) {
-            return _this3.name + ' has lived in ' + city;
+    printPlacesLived(){
+        return this.cities.map((city)=>{
+            return this.name + ' has lived in ' + city;
         });
     }
 };
@@ -123,31 +116,23 @@ var user5 = {
 console.log(user5.printPlacesLived());
 
 //Simplify it even further! Use the shorthand syntax;
-var user6 = {
+const user6 = {
     name: "Michelle Gan",
     cities: ["Tokyo", "Kyoto", "Manila"],
-    printPlacesLived: function printPlacesLived() {
-        var _this4 = this;
-
-        return this.cities.map(function (city) {
-            return _this4.name + ' has lived in ' + city;
-        });
+    printPlacesLived(){
+        return this.cities.map((city) => this.name + ' has lived in ' + city);
     }
 };
 
 console.log(user6.printPlacesLived());
 
 //Challenge Area
-var multiplier = {
-    numbers: [1, 2, 3, 4, 5, 6],
+const multiplier = {
+    numbers: [1,2,3,4,5,6],
     multiplicand: 4,
-    multiplyArray: function multiplyArray() {
-        var _this5 = this;
-
-        return this.numbers.map(function (num) {
-            return num * _this5.multiplicand;
-        });
+    multiplyArray(){
+        return this.numbers.map((num) => num*this.multiplicand);
     }
-};
+}
 
-console.log(multiplier.multiplyArray());
+console.log(multiplier.multiplyArray())
