@@ -48,13 +48,22 @@ const  template = (
 //===================================================
 
 let count = 0;
-
+const addOne = () => console.log('Add one');
+const minusOne = () => console.log('Subtract one');
+const reset = () => console.log('Reset');
 const templateThree = (
     <div>
         <h1>Count: {count}</h1>
-        <button id="my-id" class="button">+1</button>
-        <button></button>
+        <button onClick={addOne}>+1</button>
+        <button onClick={minusOne}>-1</button>
+        <button onClick={reset}>Reset</button>
     </div>
 );
+
+//Challenge
+//Make button "-1" and reset
+
+//class has to be defined as className in JSX
+console.log(templateThree);
 const  appRoot = document.getElementById('app');
 ReactDOM.render(templateThree, appRoot);
