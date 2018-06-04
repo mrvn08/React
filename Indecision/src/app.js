@@ -6,7 +6,9 @@ const  app = {
     options: ['item one', 'item two']
 };
 
+//===================================================
 // JSX - JavaScript XML
+//===================================================
 const  template = (
     <div>
         <h1>{app.title}</h1>
@@ -19,24 +21,40 @@ const  template = (
     </div>
 );
 
-const  user = {
-    name: 'Moises Limson',
-    age: 29,
-    location: 'Narnia'
-};
+//===================================================
+// Render Exercise
+//===================================================
+// const  user = {
+//     name: 'Moises Limson',
+//     age: 29,
+//     location: 'Narnia'
+// };
 
-function getLocation(userinfo){
-    if(userinfo.location) 
-        return <p>Location: {userinfo.location}</p>;
-}
+// function getLocation(userinfo){
+//     if(userinfo.location) 
+//         return <p>Location: {userinfo.location}</p>;
+// }
  
-const  templateTwo = (
+// const  templateTwo = (
+//     <div>
+//         <h1>{user.name ? user.name : 'Anonymous'}</h1>
+//         {(user.age &&  user.age >= 18 )&& <p>Age: {user.age}</p>}
+//         {getLocation(user)}
+//     </div>
+// );
+
+//===================================================
+// Counter
+//===================================================
+
+let count = 0;
+
+const templateThree = (
     <div>
-        <h1>{user.name ? user.name : 'Anonymous'}</h1>
-        {(user.age &&  user.age >= 18 )&& <p>Age: {user.age}</p>}
-        {getLocation(user)}
+        <h1>Count: {count}</h1>
+        <button id="my-id" class="button">+1</button>
+        <button></button>
     </div>
 );
-
 const  appRoot = document.getElementById('app');
-ReactDOM.render(template, appRoot);
+ReactDOM.render(templateThree, appRoot);
