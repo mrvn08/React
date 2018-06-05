@@ -1,69 +1,62 @@
 console.log('App.js is running');
 
+const  appRoot = document.getElementById('app');
+
 const  app = {
     title: "Indecision App",
     subtitle: "Put your life in the hands of a computer",
-    options: ['item one', 'item two']
+    options: []
 };
 
 //===================================================
 // JSX - JavaScript XML
 //===================================================
-const  template = (
-    <div>
-        <h1>{app.title}</h1>
-        { app.subtitle && <p>{app.subtitle}</p> }
-        { app.options.length > 0 ? <p>Here are your options</p> : <p>No Options</p>}
-        <ol>
-            <li>Item one</li>
-            <li>Item two</li>
-        </ol>
-    </div>
-);
 
-//===================================================
-// Render Exercise
-//===================================================
-// const  user = {
-//     name: 'Moises Limson',
-//     age: 29,
-//     location: 'Narnia'
-// };
+const onFormSubmit = (e) => {
+    e.preventDefault();
+    
+    const option = e.target.elements.option.value;
 
-// function getLocation(userinfo){
-//     if(userinfo.location) 
-//         return <p>Location: {userinfo.location}</p>;
-// }
- 
-// const  templateTwo = (
-//     <div>
-//         <h1>{user.name ? user.name : 'Anonymous'}</h1>
-//         {(user.age &&  user.age >= 18 )&& <p>Age: {user.age}</p>}
-//         {getLocation(user)}
-//     </div>
-// );
+    if(option){
+        app.options.push(option);
+        e.target.elements.option.value = "";
+    }
 
-//===================================================
-// Counter
-//===================================================
+    renderList();
+};
 
-let count = 0;
-const addOne = () => console.log('Add one');
-const minusOne = () => console.log('Subtract one');
-const reset = () => console.log('Reset');
-const templateThree = (
-    <div>
-        <h1>Count: {count}</h1>
-        <button onClick={addOne}>+1</button>
-        <button onClick={minusOne}>-1</button>
-        <button onClick={reset}>Reset</button>
-    </div>
-);
+const clearOptions = () => {
+    app.options = [];
+    renderList();
+};
 
-//Challenge
-//Make button "-1" and reset
+const popOptions = () => {
+    app.options.pop();
+    renderList();
+};
 
-//class has to be defined as className in JSX
-console.log(templateThree);
-const  appRoot = document.getElementById('app');
-ReactDOM.render(templateThree, appRoot);
+const renderList = () => {
+    const  template = (
+        <div>
+            <h1>{app.title}</h1>
+            { app.subtitle && <p>{app.subtitle}</p> }
+            <p>{ app.options.length > 0 ? "Here are your options" : "No Options"}</p>
+            <p>{ app.options.length}</p>
+            <button onClick={clearOptions}>Remove all</button>
+            <button onClick={popOptions}>Remove last added</button>
+            <ol>
+                <li>Item one</li>
+                <li>Item two</li>
+            </ol>
+            <form onSubmit={onFormSubmit}>
+                <input type="text" name="option" placeholder="Go ahead"></input>
+                <button type="submit">Add Option</button>
+            </form>
+        </div>
+    );
+
+    ReactDOM.render(template, appRoot);
+};
+
+renderList();
+
