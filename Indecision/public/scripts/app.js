@@ -1,103 +1,47 @@
-'use strict';
+"use strict";
 
-console.log('App.js is running');
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var appRoot = document.getElementById('app');
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var app = {
-    title: "Indecision App",
-    subtitle: "Put your life in the hands of a computer",
-    options: []
-};
+//================================================
+//ES6 Classes
+//================================================
 
-//===================================================
-// JSX - JavaScript XML
-//===================================================
+// Person class
 
-var onFormSubmit = function onFormSubmit(e) {
-    e.preventDefault();
+var Person = function () {
+    //name defaults to Anonymous if it is not set
+    function Person() {
+        var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'Anonymous';
+        var age = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
 
-    var option = e.target.elements.option.value;
+        _classCallCheck(this, Person);
 
-    if (option) {
-        app.options.push(option);
-        e.target.elements.option.value = "";
+        this.name = name;
+        this.age = age;
     }
 
-    renderList();
-};
+    _createClass(Person, [{
+        key: "sayHello",
+        value: function sayHello() {
+            //return "Hi, my name is " + this.name + "!";
+            return "Hi, my name is " + this.name + "!"; //ES6 standard
+            //these two work the same
+        }
+    }, {
+        key: "getDescription",
+        value: function getDescription() {
+            return this.name + " is " + this.age + " years old.";
+        }
+    }]);
 
-var clearOptions = function clearOptions() {
-    app.options = [];
-    renderList();
-};
+    return Person;
+}();
 
-var popOptions = function popOptions() {
-    app.options.pop();
-    renderList();
-};
+var me = new Person("Marvin");
+console.log(me.sayHello()); //calling function
 
-var renderList = function renderList() {
-    var template = React.createElement(
-        'div',
-        null,
-        React.createElement(
-            'h1',
-            null,
-            app.title
-        ),
-        app.subtitle && React.createElement(
-            'p',
-            null,
-            app.subtitle
-        ),
-        React.createElement(
-            'p',
-            null,
-            app.options.length > 0 ? "Here are your options" : "No Options"
-        ),
-        React.createElement(
-            'p',
-            null,
-            app.options.length
-        ),
-        React.createElement(
-            'button',
-            { onClick: clearOptions },
-            'Remove all'
-        ),
-        React.createElement(
-            'button',
-            { onClick: popOptions },
-            'Remove last added'
-        ),
-        React.createElement(
-            'ol',
-            null,
-            React.createElement(
-                'li',
-                null,
-                'Item one'
-            ),
-            React.createElement(
-                'li',
-                null,
-                'Item two'
-            )
-        ),
-        React.createElement(
-            'form',
-            { onSubmit: onFormSubmit },
-            React.createElement('input', { type: 'text', name: 'option', placeholder: 'Go ahead' }),
-            React.createElement(
-                'button',
-                { type: 'submit' },
-                'Add Option'
-            )
-        )
-    );
-
-    ReactDOM.render(template, appRoot);
-};
-
-renderList();
+//you can leave arguments blank and will automatically be set to the default if it exists.
+var other = new Person();
+console.log(other.getDescription());

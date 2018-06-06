@@ -35,19 +35,23 @@ const popOptions = () => {
     renderList();
 };
 
+const onMakeDecision = () => {
+    const randomNum =  Math.floor(Math.random() * app.options.length);
+    const option = app.options[randomNum];
+    alert(option);
+};
+
 const renderList = () => {
     const  template = (
         <div>
             <h1>{app.title}</h1>
             { app.subtitle && <p>{app.subtitle}</p> }
             <p>{ app.options.length > 0 ? "Here are your options" : "No Options"}</p>
-            <p>{ app.options.length}</p>
+            <div><button disabled={app.options.length === 0} onClick={onMakeDecision}>What should I do</button></div>
             <button onClick={clearOptions}>Remove all</button>
             <button onClick={popOptions}>Remove last added</button>
-            <ol>
-                <li>Item one</li>
-                <li>Item two</li>
-            </ol>
+            {/*mapping option through map function in array*/}
+            { app.options.length > 0 && <ol>{app.options.map((item) => <li key={item}>{item}</li>)}</ol> }
             <form onSubmit={onFormSubmit}>
                 <input type="text" name="option" placeholder="Go ahead"></input>
                 <button type="submit">Add Option</button>
