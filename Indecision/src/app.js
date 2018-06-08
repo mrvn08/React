@@ -1,6 +1,5 @@
 //Creating react components
 //Uppercase classes are a must in react components.
-
 class IndecisionApp extends React.Component{
     render(){
         const title = "Indecision App";
@@ -45,8 +44,14 @@ class Action extends React.Component{
 
 //Challenge
 class Options extends React.Component{
+    constructor(props){
+        super(props);
+        this.handleRemoveAll = this.handleRemoveAll.bind(this);
+    }
+
     handleRemoveAll(){
-        alert("Eliminate!");
+        console.log(this.props.options);
+        //alert("Eliminate!");
     }
 
     render(){
