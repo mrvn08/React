@@ -19,6 +19,13 @@ module.exports = {
             loader: 'babel-loader',
             test: /\.js$/,
             exclude: /node_modules/
+        }, {
+            test: /\.scss$/,
+            use: [
+                'style-loader',
+                'css-loader',
+                'sass-loader'
+            ]
         }]
     },
     devtool: 'cheap-module-eval-source-map',
@@ -29,3 +36,8 @@ module.exports = {
 // Setting devtool to 'cheap-module-eval-source-map' makes it easier to debug
 // Loader
 // Setting up loader for babel
+
+//to add styles make sure to add the following:
+//style-loader and css-loader
+
+
