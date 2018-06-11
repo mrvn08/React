@@ -1,0 +1,11 @@
+//Use rem for sizing
+//Better support for accesibility
+
+html{
+    font-size: 62.5%; //gives us 10px instead of 16px. This is easier to fiddle with
+}
+body {
+    font-family: 'Lato', 'Arial', sans-serif;
+    font-size: 1.6rem
+}
+
