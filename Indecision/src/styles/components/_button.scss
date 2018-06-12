@@ -21,7 +21,7 @@
 }
 
 // Button
-.button {
+button {
     background: $purple;
     border: none;
     border-bottom: .3rem solid darken($purple, 10%);
@@ -35,4 +35,11 @@
     border: none;
     color: $off-white;
     padding: 0;
+}
+
+// Responsive Styles
+@media (max-width: $mobile-breakpoint) {
+    .big-button {
+        margin-bottom: $regular;
+    }
 }

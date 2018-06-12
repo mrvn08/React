@@ -17,3 +17,9 @@
     font-weight: 500;
     margin: 0;
 }
+
+@media (max-width: $mobile-breakpoint) {
+    .header{
+        margin-bottom: $regular;
+    }
+}
