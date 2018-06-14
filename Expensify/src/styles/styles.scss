@@ -1,12 +1,3 @@
-//Note that when importing css we type the path without the extension or the underscore
 @import './base/settings';
-//Importing settings first coz it contains the variables.
 @import './base/base';
-@import './components/add-option';
-@import './components/button';
-@import './components/container';
-@import './components/header';
-@import './components/option';
-@import './components/widget';
-@import './components/modal';
 
