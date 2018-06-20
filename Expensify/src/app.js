@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 //Routers
 import AppRouter from './routers/AppRouter'
 //Store
 import configureStore from './store/configureStore';
 //Actions
 import { addExpense, removeExpense, editExpense } from './actions/expenses';
-import { setTextFilter, sortByDate, sortByAmount, setStartDate, setEndDate} from './actions/filters';
+import { setTextFilter, sortByDate, sortByAmount, setStartDate, setEndDate } from './actions/filters';
 //Selectors
 import getVisibleExpenses from './selectors/expenses';
 //Styles
@@ -21,13 +22,20 @@ store.subscribe(() => {
     console.log(visibleExpenses);
 });
 
-store.dispatch(addExpense({ description: "Water bill", amount: 12300, createdAt: 0 }));
-store.dispatch(addExpense({ description: "Gas bill", amount: 4560, createdAt: -2000 }));
-store.dispatch(setTextFilter("bill"));
-store.dispatch(setTextFilter("water"));
+store.dispatch(addExpense({ description: "Water bill", amount: 4500, createdAt: 0 }));
+store.dispatch(addExpense({ description: "Gas bill", amount: 1000, createdAt: -2000 }));
+store.dispatch(addExpense({ description: "Rent", amount: 109500, createdAt: -3000 }));
+
+//setTimeout(() => { store.dispatch(setTextFilter("bill")); }, 3000)
 
 console.log(store.getState());
 
+const jsx = (
+    <Provider store={store}>
+        <AppRouter />
+    </Provider>
+);
+
 //Switch goes into each route, if it finds a match it exits. This prevents the 404 from appearing all the time
-ReactDOM.render(<AppRouter />, document.getElementById('app'));
+ReactDOM.render(jsx, document.getElementById('app'));
 
