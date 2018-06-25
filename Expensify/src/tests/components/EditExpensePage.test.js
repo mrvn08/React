@@ -10,7 +10,14 @@ beforeEach(() => {
     editExpense = jest.fn();
     removeExpense = jest.fn();
     history = { push: jest.fn() };
-    wrapper = shallow(<EditExpensePage match = {match} editExpense={editExpense} removeExpense={removeExpense} history={history}/>);
+    wrapper = shallow(
+        <EditExpensePage 
+            match = {match} 
+            editExpense={editExpense} 
+            removeExpense={removeExpense} 
+            history={history}
+        />
+    );
 });
 
 test('Should render edit expense page', () => {
@@ -24,7 +31,8 @@ test('Should handle edit expense function', () => {
 });
 
 test('Should handle remove expense function', () => {
-    wrapper.find('ExpenseForm').prop('onClick')();
+    //wrapper.find('button').prop('onClick')();
+    wrapper.find('button').simulate('click');
     expect(removeExpense).toHaveBeenLastCalledWith({ id: 1 });
     expect(history.push).toHaveBeenLastCalledWith('/');
 });
