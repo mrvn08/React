@@ -7,33 +7,65 @@ const path = require('path');
 
 //__dirname contains the path to the project/public
 //console.log(path.join(__dirname,'public'));
-
-module.exports = {
-    entry: './src/app.js',
-    output: {
-        path: path.join(__dirname,'public'), 
-        filename: 'bundle.js'
-    },
-    module: {
-        rules: [{
-            loader: 'babel-loader',
-            test: /\.js$/,
-            exclude: /node_modules/
-        }, {
-            test: /\.s?css$/,
-            use: [
-                'style-loader',
-                'css-loader',
-                'sass-loader'
-            ]
-        }]
-    },
-    devtool: 'cheap-module-eval-source-map',
-    devServer: { 
-        contentBase: path.join(__dirname,'public'),
-        historyApiFallback: true
+module.exports = (env) => {
+    const isProduction = env === 'production';
+    console.log('env', env);
+    return {
+        entry: './src/app.js',
+        output: {
+            path: path.join(__dirname,'public'), 
+            filename: 'bundle.js'
+        },
+        module: {
+            rules: [{
+                loader: 'babel-loader',
+                test: /\.js$/,
+                exclude: /node_modules/
+            }, {
+                test: /\.s?css$/,
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    'sass-loader'
+                ]
+            }]
+        },
+        devtool: isProduction ? 'source-map' : 'cheap-module-eval-source-map',
+        devServer: { 
+            contentBase: path.join(__dirname,'public'),
+            historyApiFallback: true
+        }
     }
 };
+
+// module.exports = {
+//     entry: './src/app.js',
+//     output: {
+//         path: path.join(__dirname,'public'), 
+//         filename: 'bundle.js'
+//     },
+//     module: {
+//         rules: [{
+//             loader: 'babel-loader',
+//             test: /\.js$/,
+//             exclude: /node_modules/
+//         }, {
+//             test: /\.s?css$/,
+//             use: [
+//                 'style-loader',
+//                 'css-loader',
+//                 'sass-loader'
+//             ]
+//         }]
+//     },
+//     devtool: 'cheap-module-eval-source-map',
+//     devServer: { 
+//         contentBase: path.join(__dirname,'public'),
+//         historyApiFallback: true
+//     }
+// };
+
+// Pre production
 // Setting devtool to 'cheap-module-eval-source-map' makes it easier to debug
 // Loader
 // Setting up loader for babel
