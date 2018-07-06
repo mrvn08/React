@@ -14,6 +14,8 @@ firebase.initializeApp(config);
 
 const database = firebase.database();
 
+export { firebase, database as default};
+
 // database.ref('expenses')
 //     .once('value')
 //     .then((snapshot) => {
@@ -41,24 +43,24 @@ const database = firebase.database();
 // });
 // There are other events you can watch such as child_added, child_removed, child_changed, child_moved
 
-// Child Removed
-database.ref('expenses').on('child_removed', (snapshot) => {
-    console.log(snapshot.key, snapshot.val());
-});
+// // Child Removed
+// database.ref('expenses').on('child_removed', (snapshot) => {
+//     console.log(snapshot.key, snapshot.val());
+// });
 
-//Child Changed
-database.ref('expenses').on('child_changed', (snapshot) => {
-    console.log(snapshot.key, snapshot.val());
-});
+// //Child Changed
+// database.ref('expenses').on('child_changed', (snapshot) => {
+//     console.log(snapshot.key, snapshot.val());
+// });
 
-//Child Added
-database.ref('expenses').on('child_added', (snapshot) => {
-    console.log(snapshot.key, snapshot.val());
-});
+// //Child Added
+// database.ref('expenses').on('child_added', (snapshot) => {
+//     console.log(snapshot.key, snapshot.val());
+// });
 
-database.ref('expenses').push({
-    description: 'Expense 1',
-    amount: 1011,
-    note: 'Impulsive buying',
-    createdAt: 0
-});
+// database.ref('expenses').push({
+//     description: 'Expense 1',
+//     amount: 1011,
+//     note: 'Impulsive buying',
+//     createdAt: 0
+// });
