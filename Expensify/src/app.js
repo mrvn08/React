@@ -6,8 +6,8 @@ import AppRouter from './routers/AppRouter'
 //Store
 import configureStore from './store/configureStore';
 //Actions
-import { addExpense, removeExpense, editExpense } from './actions/expenses';
-import { setTextFilter, sortByDate, sortByAmount, setStartDate, setEndDate } from './actions/filters';
+import { startSetExpenses } from './actions/expenses';
+import { setTextFilter } from './actions/filters';
 //Selectors
 import getVisibleExpenses from './selectors/expenses';
 //Styles
@@ -42,6 +42,10 @@ const jsx = (
     </Provider>
 );
 
+ReactDOM.render(<p>Loading...</p>, document.getElementById('app'));
+
 //Switch goes into each route, if it finds a match it exits. This prevents the 404 from appearing all the time
-ReactDOM.render(jsx, document.getElementById('app'));
+store.dispatch(startSetExpenses()).then(() => {
+    ReactDOM.render(jsx, document.getElementById('app'));
+});
 

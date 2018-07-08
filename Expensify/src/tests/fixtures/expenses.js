@@ -14,7 +14,7 @@ const expensesTestData = [
         amount: 109500,
         createdAt: moment(0).subtract(4, 'days').valueOf()
     },{
-        id: '2',
+        id: '3',
         description: 'Credit Card',
         note: '',
         amount: 1200,

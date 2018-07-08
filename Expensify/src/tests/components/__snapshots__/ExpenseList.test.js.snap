@@ -36,8 +36,8 @@ exports[`Should render ExpenseList with expenses 1`] = `
     amount={1200}
     createdAt={345600000}
     description="Credit Card"
-    id="2"
-    key="2"
+    id="3"
+    key="3"
     note=""
   />
 </div>
