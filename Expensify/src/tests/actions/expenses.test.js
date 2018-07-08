@@ -1,6 +1,15 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { startAddExpense, addExpense, editExpense, removeExpense, setExpenses, startSetExpenses, startRemoveExpense } from '../../actions/expenses';
+import { 
+    startAddExpense, 
+    addExpense, 
+    editExpense,
+    startEditExpense, 
+    removeExpense, 
+    startRemoveExpense, 
+    setExpenses, 
+    startSetExpenses 
+} from '../../actions/expenses';
 import expensesTestData from '../fixtures/expenses';
 import database from '../../firebase/firebase';
 
@@ -23,6 +32,23 @@ test('Should setup remove expense action object', () => {
     //use toEqual to compare objects instead as toBe uses ===.
 });
 
+test('Should remove expense from database', (done) =>{
+    const store = createMockStore({});
+
+    store.dispatch(startRemoveExpense(expensesTestData[0])).then(() => {
+        const actions = store.getActions({});
+        expect(actions[0]).toEqual({
+            type: 'REMOVE_EXPENSE',
+            id: expensesTestData[0].id
+        });
+
+        return database.ref(`expense/${expensesTestData[0].id}`).once('value');
+    }).then((snapshot) => {
+        expect(snapshot.val()).toBeFalsy();
+        done();
+    });
+});
+
 test('Should setup edit expense action object', () => {
     expect(editExpense('someId', { note: 'test', amount: 123 })).toEqual({
         type: 'EDIT_EXPENSE',
@@ -31,6 +57,30 @@ test('Should setup edit expense action object', () => {
             note: 'test',
             amount: 123
         }
+    });
+});
+
+test('Should update expense in database with provided values', (done) => {
+    const store = createMockStore({});
+    const newValues = {
+        description: "This month's rent",
+        amount: 987654,
+        note: 'Quite expensive',
+        createdAt: 98800
+    }
+
+    store.dispatch(startEditExpense(expensesTestData[0].id, newValues)).then(() => {
+        const actions = store.getActions();
+        expect(actions[0]).toEqual({
+            type: 'EDIT_EXPENSE',
+            id: expensesTestData[0].id,
+            updates: newValues
+        });
+
+        return database.ref(`expense/${expensesTestData[0].id}`).once('value');
+    }).then((snapshot) => {
+        expect(snapshot.val()).toEqual(newValues);
+        done();
     });
 });
 
@@ -119,15 +169,3 @@ test('Should set expense to store from database', (done) => {
     }) 
 });
 
-test('Should remove expense from database', (done) =>{
-    const store = createMockStore({});
-
-    store.dispatch(startRemoveExpense(expensesTestData[0])).then(() => {
-        database.ref(`expense/${expensesTestData[0].id}`)
-        .once('value')
-        .then((snapshot) => {
-            expect(snapshot.val()).toBe(null);
-            done();
-        });
-    });
-});
