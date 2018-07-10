@@ -1,28 +1,33 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
+import createHistory from 'history/createBrowserHistory';
 import LoginPage from '../components/LoginPage';
 import AddExpensePage from '../components/AddExpensePage';
 import EditExpensePage from '../components/EditExpensePage';
 import ExpensifyDashboardPage from '../components/ExpensifyDashboardPage';
-import Header from '../components/Header';
-import HelpPage from '../components/HelpPage';
 import NotFoundPage from '../components/NotFoundPage';
+import PrivateRoute from './PrivateRoute';
+import PublicRoute from './PublicRoute';
+
+export const history = createHistory();
 
 const AppRouter = () => (
-    <BrowserRouter>
+    <Router history={history}>
         <div>
-            <Header />
             <Switch>
-                <Route path="/" component={LoginPage} exact={true}/>
-                <Route path="/dashboard" component={ExpensifyDashboardPage}/>
-                <Route path="/create" component={AddExpensePage}/>
-                <Route path="/edit/:id" component={EditExpensePage}/>
-                <Route path="/help" component={HelpPage}/>
+                <PublicRoute path="/" component={LoginPage} exact={true}/>
+                <PrivateRoute path="/dashboard" component={ExpensifyDashboardPage}/>
+                <PrivateRoute path="/create" component={AddExpensePage}/>
+                <PrivateRoute path="/edit/:id" component={EditExpensePage}/>
                 <Route component={NotFoundPage}/>
             </Switch>
         </div>
-    </BrowserRouter>
+    </Router>
 );
+//Code above initally used <BrowserRouter> instead of <Router>
+//Browser router already has history integrated to it, instead we added history through npm,
+//and set it as the history to Router. This allows us to export the history and make
+//function calls to it elsewhere.
 
 //The edit expense page has a dynamic id variable added to the end
 

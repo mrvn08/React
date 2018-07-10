@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-//Routers
-import AppRouter from './routers/AppRouter'
+//Routers, History
+import AppRouter, { history } from './routers/AppRouter'
 //Store
 import configureStore from './store/configureStore';
 //Actions
 import { startSetExpenses } from './actions/expenses';
-import { setTextFilter } from './actions/filters';
+import { login, logout } from './actions/auth';
 //Selectors
 import getVisibleExpenses from './selectors/expenses';
 //Styles
@@ -18,6 +18,13 @@ import 'react-dates/lib/css/_datepicker.css';
 import { firebase } from './firebase/firebase';
 
 const store = configureStore();
+let hasRendered = false;
+const renderApp = () => {
+    if(!hasRendered){
+        ReactDOM.render(jsx, document.getElementById('app'));
+        hasRendered = true;
+    }
+};
 
 // Susbcribing to dummy data calls
 // store.subscribe(() => {
@@ -44,14 +51,18 @@ const jsx = (
 ReactDOM.render(<p>Loading...</p>, document.getElementById('app'));
 
 //Switch goes into each route, if it finds a match it exits. This prevents the 404 from appearing all the time
-store.dispatch(startSetExpenses()).then(() => {
-    ReactDOM.render(jsx, document.getElementById('app'));
-});
-
 firebase.auth().onAuthStateChanged((user) => {
     if(user){
-        console.log('log in');
+        store.dispatch(login(user.uid));
+        store.dispatch(startSetExpenses()).then(() => {
+            renderApp();
+            if(history.location.pathname === '/'){
+                history.push('/dashboard');
+            }
+        });
     } else {
-        console.log('log out');
+        store.dispatch(logout());
+        renderApp();
+        history.push('/');
     }
 });
