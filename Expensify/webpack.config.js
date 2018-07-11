@@ -16,13 +16,15 @@ if(process.env.NODE_ENV === 'test'){
 
 //__dirname contains the path to the project/public
 //console.log(path.join(__dirname,'public'));
+//setup babel-polyfill so it runs in older browsers
+
 module.exports = (env) => {
     const isProduction = env === 'production';
     const CSSExtract = new ExtractTextPlugin('styles.css');
 
     console.log('env', env);
     return {
-        entry: './src/app.js',
+        entry: ['babel-polyfill', './src/app.js'],
         output: {
             path: path.join(__dirname, 'public', 'dist'), 
             filename: 'bundle.js'

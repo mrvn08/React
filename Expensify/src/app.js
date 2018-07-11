@@ -16,6 +16,7 @@ import './styles/styles.scss';
 import 'react-dates/lib/css/_datepicker.css';
 //Firebase
 import { firebase } from './firebase/firebase';
+import LoadingPage from './components/LoadingPage';
 
 const store = configureStore();
 let hasRendered = false;
@@ -48,7 +49,7 @@ const jsx = (
     </Provider>
 );
 
-ReactDOM.render(<p>Loading...</p>, document.getElementById('app'));
+ReactDOM.render(<LoadingPage />, document.getElementById('app'));
 
 //Switch goes into each route, if it finds a match it exits. This prevents the 404 from appearing all the time
 firebase.auth().onAuthStateChanged((user) => {
