@@ -1,0 +1,17 @@
+Expensify Changes
+
+1. Add confirmation modal when removing expense
+2. Show number of hidden expenses in /dashboard summary
+3. Add support for another social login system (Github, Facebook, Twitter)
+4. Buy a custom domain and configure it with Heroku ( or use subdomain on domain you own )
+5. Register with E-mail and Login with it ?
+6. Show name and photo near logout button ?
+7. Have save as preset expenses
+8. Refactor Test Files
+9. Edit Firebase Profile Info
+10.Real Time Update On Edit Profile
+11.Register Validations (Validate Input Fields, Password match, Invalid E-mail, E-mail Exists etc)
+12.Register (Redirect to Dashboard with Updated Info)
+13.Multi language.
+14.Change currency type.
+15.Change theme.
